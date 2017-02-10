@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,sqlserver," />
+  <meta name="keywords" content="技术,数据库,SQLSERVER," />
 
 
 
@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="CMD1ALTER TABLE Customer DROP CONSTRAINT Con_First;
-eg.1alter table vouchertype drop consTRAINT DF__VoucherTy__Areas__6748398C;
-error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
+<meta name="description" content="遇到的问题123ALTER TABLE DROP COLUMN Areas failed because one or more objects access this column.Msg 5074, Level 16, State 1.The object &amp;apos;DF__VoucherTy__Areas__6748398C&amp;apos; is dependent on column &amp;ap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sqlserver 删除依赖">
 <meta property="og:url" content="http://yoursite.com/2017/02/10/sqlserver-删除依赖/index.html">
 <meta property="og:site_name" content="叶千铭的博客">
-<meta property="og:description" content="CMD1ALTER TABLE Customer DROP CONSTRAINT Con_First;
-eg.1alter table vouchertype drop consTRAINT DF__VoucherTy__Areas__6748398C;
-error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
-<meta property="og:updated_time" content="2017-02-10T09:06:03.000Z">
+<meta property="og:description" content="遇到的问题123ALTER TABLE DROP COLUMN Areas failed because one or more objects access this column.Msg 5074, Level 16, State 1.The object &amp;apos;DF__VoucherTy__Areas__6748398C&amp;apos; is dependent on column &amp;ap">
+<meta property="og:updated_time" content="2017-02-10T09:08:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqlserver 删除依赖">
-<meta name="twitter:description" content="CMD1ALTER TABLE Customer DROP CONSTRAINT Con_First;
-eg.1alter table vouchertype drop consTRAINT DF__VoucherTy__Areas__6748398C;
-error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
+<meta name="twitter:description" content="遇到的问题123ALTER TABLE DROP COLUMN Areas failed because one or more objects access this column.Msg 5074, Level 16, State 1.The object &amp;apos;DF__VoucherTy__Areas__6748398C&amp;apos; is dependent on column &amp;ap">
 
 
 
@@ -362,9 +356,9 @@ error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
       
 
       
-        <h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ALTER TABLE Customer DROP CONSTRAINT Con_First;</div></pre></td></tr></table></figure>
+        <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ALTER TABLE DROP COLUMN Areas failed because one or more objects access this column.</div><div class="line">Msg 5074, Level 16, State 1.</div><div class="line">The object &apos;DF__VoucherTy__Areas__6748398C&apos; is dependent on column &apos;Areas&apos;. (Line 7)</div></pre></td></tr></table></figure>
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ALTER TABLE Customer DROP CONSTRAINT Con_First;</div></pre></td></tr></table></figure>
 <h2 id="eg"><a href="#eg" class="headerlink" title="eg."></a>eg.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter table vouchertype drop consTRAINT DF__VoucherTy__Areas__6748398C;</div></pre></td></tr></table></figure>
-<h2 id="error"><a href="#error" class="headerlink" title="error"></a>error</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ALTER TABLE DROP COLUMN Areas failed because one or more objects access this column.</div><div class="line">Msg 5074, Level 16, State 1.</div><div class="line">The object &apos;DF__VoucherTy__Areas__6748398C&apos; is dependent on column &apos;Areas&apos;. (Line 7)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -390,7 +384,9 @@ error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
           
             <a href="/tags/技术/" rel="tag"># 技术</a>
           
-            <a href="/tags/sqlserver/" rel="tag"># sqlserver</a>
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/SQLSERVER/" rel="tag"># SQLSERVER</a>
           
         </div>
       
@@ -515,7 +511,7 @@ error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -550,7 +546,7 @@ error123ALTER TABLE DROP COLUMN Areas failed because one or more objects">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD"><span class="nav-number">1.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eg"><span class="nav-number">2.</span> <span class="nav-text">eg.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#error"><span class="nav-number">3.</span> <span class="nav-text">error</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">1.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD"><span class="nav-number">2.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eg"><span class="nav-number">3.</span> <span class="nav-text">eg.</span></a></li></ol></div>
             
 
           </div>
