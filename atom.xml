@@ -61,11 +61,10 @@
     <link href="https://yeqianming.github.io/2017/02/13/%E8%81%8A%E8%81%8Atcp-%E8%BF%9E%E6%8E%A5%E6%B1%A0/"/>
     <id>https://yeqianming.github.io/2017/02/13/聊聊tcp-连接池/</id>
     <published>2017-02-13T12:47:41.000Z</published>
-    <updated>2017-02-13T12:55:53.000Z</updated>
+    <updated>2017-02-14T07:27:20.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="http://www.tuicool.com/articles/iI3Ybq7" title="聊聊tcp 连接池" target="_blank" rel="external">转载自推酷</a></p>
-<p>概览：</p>
-<ul>
+<h2 id="概览："><a href="#概览：" class="headerlink" title="概览："></a>概览：</h2><ul>
 <li><strong>为什么需要连接池</strong></li>
 <li><strong>连接失效问题</strong></li>
 <li><strong>database/sql 中的连接池</strong></li>
@@ -116,18 +115,16 @@
     <summary type="html">
     
       &lt;p&gt;&lt;a href=&quot;http://www.tuicool.com/articles/iI3Ybq7&quot; title=&quot;聊聊tcp 连接池&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;转载自推酷&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;概览：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;str
+&lt;h2 id=&quot;概览：&quot;&gt;&lt;a href=&quot;#概
     
     </summary>
     
       <category term="技术博客" scheme="https://yeqianming.github.io/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/"/>
     
     
-      <category term="网络" scheme="https://yeqianming.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
-    
       <category term="TCP" scheme="https://yeqianming.github.io/tags/TCP/"/>
+    
+      <category term="网络" scheme="https://yeqianming.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   

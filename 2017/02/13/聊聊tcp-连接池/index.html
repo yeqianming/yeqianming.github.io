@@ -19,44 +19,41 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="网络,TCP">
+    <meta name="keywords" content="TCP,网络">
     <meta name="description" content="转载自推酷
 概览：
-
 为什么需要连接池
 连接失效问题
 database/sql 中的连接池
 使用连接池管理Thrift链接
 
 以下主要使用Golang作为编程语言
-为什么需要连接池我觉得使用连接池最大的一个好处就是 减少连接的创建和关闭，增加系统负载能力 ， 之前就有遇到一个问题： TCP TIME_WAIT连接数过多导致服务不可用 ，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁">
+为什么需要连接池我觉得使用连接池最大的一个好处就是 减少连接的创建和关闭，增加系统负载能力 ， 之前就有遇到一个问题： TCP TIME_WAIT连接数过多导致服务不可用 ，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊聊Tcp连接池">
 <meta property="og:url" content="https://yeqianming.github.io/2017/02/13/聊聊tcp-连接池/index.html">
 <meta property="og:site_name" content="叶千铭的博客">
 <meta property="og:description" content="转载自推酷
 概览：
-
 为什么需要连接池
 连接失效问题
 database/sql 中的连接池
 使用连接池管理Thrift链接
 
 以下主要使用Golang作为编程语言
-为什么需要连接池我觉得使用连接池最大的一个好处就是 减少连接的创建和关闭，增加系统负载能力 ， 之前就有遇到一个问题： TCP TIME_WAIT连接数过多导致服务不可用 ，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁">
-<meta property="og:updated_time" content="2017-02-13T12:55:53.000Z">
+为什么需要连接池我觉得使用连接池最大的一个好处就是 减少连接的创建和关闭，增加系统负载能力 ， 之前就有遇到一个问题： TCP TIME_WAIT连接数过多导致服务不可用 ，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的">
+<meta property="og:updated_time" content="2017-02-14T07:27:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊聊Tcp连接池">
 <meta name="twitter:description" content="转载自推酷
 概览：
-
 为什么需要连接池
 连接失效问题
 database/sql 中的连接池
 使用连接池管理Thrift链接
 
 以下主要使用Golang作为编程语言
-为什么需要连接池我觉得使用连接池最大的一个好处就是 减少连接的创建和关闭，增加系统负载能力 ， 之前就有遇到一个问题： TCP TIME_WAIT连接数过多导致服务不可用 ，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁">
+为什么需要连接池我觉得使用连接池最大的一个好处就是 减少连接的创建和关闭，增加系统负载能力 ， 之前就有遇到一个问题： TCP TIME_WAIT连接数过多导致服务不可用 ，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的">
     
         <link rel="alternative" href="/atom.xml" title="叶千铭的博客" type="application/atom+xml">
     
@@ -186,7 +183,7 @@ database/sql 中的连接池
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么需要连接池"><span class="post-toc-number">1.</span> <span class="post-toc-text">为什么需要连接池</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连接失效问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">连接失效问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、长时间空闲，连接断开？"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">1、长时间空闲，连接断开？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、当服务端重启之后，连接失效？"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">2、当服务端重启之后，连接失效？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#连接失效的特征"><span class="post-toc-number">2.0.3.</span> <span class="post-toc-text">连接失效的特征</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#database-sql-中的连接池"><span class="post-toc-number">3.</span> <span class="post-toc-text">database/sql 中的连接池</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#何时释放链接"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">何时释放链接?</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用连接池管理Thrift链接"><span class="post-toc-number">4.</span> <span class="post-toc-text">使用连接池管理Thrift链接</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概览："><span class="post-toc-number">1.</span> <span class="post-toc-text">概览：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么需要连接池"><span class="post-toc-number">2.</span> <span class="post-toc-text">为什么需要连接池</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连接失效问题"><span class="post-toc-number">3.</span> <span class="post-toc-text">连接失效问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、长时间空闲，连接断开？"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">1、长时间空闲，连接断开？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、当服务端重启之后，连接失效？"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">2、当服务端重启之后，连接失效？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#连接失效的特征"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">连接失效的特征</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#database-sql-中的连接池"><span class="post-toc-number">4.</span> <span class="post-toc-text">database/sql 中的连接池</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#何时释放链接"><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">何时释放链接?</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用连接池管理Thrift链接"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用连接池管理Thrift链接</span></a></li></ol>
         </nav>
     </aside>
     
@@ -214,8 +211,7 @@ database/sql 中的连接池
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p><a href="http://www.tuicool.com/articles/iI3Ybq7" title="聊聊tcp 连接池" target="_blank" rel="external">转载自推酷</a></p>
-<p>概览：</p>
-<ul>
+<h2 id="概览："><a href="#概览：" class="headerlink" title="概览："></a>概览：</h2><ul>
 <li><strong>为什么需要连接池</strong></li>
 <li><strong>连接失效问题</strong></li>
 <li><strong>database/sql 中的连接池</strong></li>
@@ -268,7 +264,7 @@ database/sql 中的连接池
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-02-13T12:55:53.000Z" itemprop="dateUpdated">2017年2月13日 20:55</time>
+    最后更新时间：<time datetime="2017-02-14T07:27:20.000Z" itemprop="dateUpdated">2017年2月14日 15:27</time>
 </span><br>
 
 
