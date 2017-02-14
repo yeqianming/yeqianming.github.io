@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>vim 列编辑模式 | 叶千铭的博客 | 云和树</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vim">
+    <meta name="description" content="删除列
+光标定位到要操作的地方。
+CTRL+v 进入“可视 块”模式，选取这一列操作多少行。
+d 删除。
+
+插入列插入操作的话知识稍有区别。例如我们在每一行前都插入“#”；
+
+光标定位到要插入的地方。
+ctrl+v 进入 块模式，选择要操作的块。
+shift+i  输入要插入的内容
+按 esc 两次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim 列编辑模式">
+<meta property="og:url" content="https://yeqianming.github.io/2017/02/14/vim-列编辑模式/index.html">
+<meta property="og:site_name" content="叶千铭的博客">
+<meta property="og:description" content="删除列
+光标定位到要操作的地方。
+CTRL+v 进入“可视 块”模式，选取这一列操作多少行。
+d 删除。
+
+插入列插入操作的话知识稍有区别。例如我们在每一行前都插入“#”；
+
+光标定位到要插入的地方。
+ctrl+v 进入 块模式，选择要操作的块。
+shift+i  输入要插入的内容
+按 esc 两次">
+<meta property="og:updated_time" content="2017-02-14T08:05:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim 列编辑模式">
+<meta name="twitter:description" content="删除列
+光标定位到要操作的地方。
+CTRL+v 进入“可视 块”模式，选取这一列操作多少行。
+d 删除。
+
+插入列插入操作的话知识稍有区别。例如我们在每一行前都插入“#”；
+
+光标定位到要插入的地方。
+ctrl+v 进入 块模式，选择要操作的块。
+shift+i  输入要插入的内容
+按 esc 两次">
+    
+        <link rel="alternative" href="/atom.xml" title="叶千铭的博客" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.7">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">叶千铭</h5>
+          <a href="mailto:mersenbln@126.com" title="mersenbln@126.com" class="mail">mersenbln@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                目录
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yeqianming" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vim 列编辑模式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">vim 列编辑模式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-02-14T07:40:40.000Z" itemprop="datePublished" class="page-time">
+  2017-02-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除列"><span class="post-toc-number">1.</span> <span class="post-toc-text">删除列</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#插入列"><span class="post-toc-number">2.</span> <span class="post-toc-text">插入列</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-vim-列编辑模式"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vim 列编辑模式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年02月14日 15:40" datetime="2017-02-14T07:40:40.000Z"  itemprop="datePublished">2017-02-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="删除列"><a href="#删除列" class="headerlink" title="删除列"></a>删除列</h2><ul>
+<li>光标定位到要操作的地方。</li>
+<li>CTRL+v 进入“可视 块”模式，选取这一列操作多少行。</li>
+<li>d 删除。</li>
+</ul>
+<h2 id="插入列"><a href="#插入列" class="headerlink" title="插入列"></a>插入列</h2><p>插入操作的话知识稍有区别。例如我们在每一行前都插入“#”；</p>
+<ul>
+<li>光标定位到要插入的地方。</li>
+<li>ctrl+v 进入 块模式，选择要操作的块。</li>
+<li>shift+i  输入要插入的内容</li>
+<li>按 esc 两次</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-02-14T08:05:28.000Z" itemprop="dateUpdated">2017年2月14日 16:05</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/02/14/vim-列编辑模式/" target="_blank" rel="external">https://yeqianming.github.io/2017/02/14/vim-列编辑模式/</a>
+    </div>
+    <footer>
+        <a href="https://yeqianming.github.io">
+            <img src="/img/avatar.jpg" alt="叶千铭">
+            叶千铭
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/&title=《vim 列编辑模式》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/&title=《vim 列编辑模式》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vim 列编辑模式》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/&via=https://yeqianming.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/02/14/状态和无状态服务器/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">状态和无状态服务器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="vim-列编辑模式" data-title="vim 列编辑模式" data-url="https://yeqianming.github.io/2017/02/14/vim-列编辑模式/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'yeqianminggithub', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.7');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/images/mm_facetoface_collect_qrcode_1486978385729.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/images/1486978472529.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>叶千铭的博客 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/&title=《vim 列编辑模式》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/&title=《vim 列编辑模式》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vim 列编辑模式》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/&via=https://yeqianming.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/14/vim-列编辑模式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW7DMAwEwP7/0+m1QFp3l3ILWBqdgtixPDkQFMmPj3i9vqyv37x/fr///bfvd/60y80LAwPjsYzX5Upe63rj5M5232+eg4GBcQAj3z556TYEt3thYGBgtMlfkuQloRYDAwPjXkab2OVhFwMDA2PlEDsLrMnrtmwMDIzTGHnV/f8//0l/AwMD41GMV7muA+5K22BlYWBg7M3IA1z+ii0+OqAm7QcMDIwDGNdh9Pr7JBDnLYHrJ0flNgwMjI0YeQGrHRpbGcKoW6QYGBjHMNojZZsyzhqfUekNAwNja0ZypJyF1JVctU1AMTAw9mbMRivykbKVq8WAGgYGxgGM/AfJQbR9rdmg2DcBFwMDY2vGXclcPkY2+yOKqiEGBsZGjHtfpQ2UyRPqqhoGBsZ2jFnAbYtiyXPye+r+KgYGxtaMpLXZluTy0YoEHGW4GBgYD2fcFTpngbIdzvjl+RgYGAcz8tCZJJrJETcvzGFgYJzMyDfIx1tnmOJODAyMIxkrrcf/Px5jYGCcwJgVyPJWaNuwrJugGBgYBzBWil9JgM6PuEWJbZZpYmBgPIrxKtds2GJ2tfhzMTAwtmbMQurKSESbXBapIQYGxtaMvNzWHnpXRjTapgIGBsYJjHZsq43oybF2KfRjYGBglAE0aYUmKWZxiMXAwMC4dcsk7cvLghgYGOcw2rGwdnRs1gb4k3IbBgbGAxmzEYd2kOvegDtsamJgYDyP8QmbTImHyqBivQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.7"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.7" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
