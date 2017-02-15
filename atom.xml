@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yeqianming.github.io/"/>
-  <updated>2017-02-15T09:33:10.000Z</updated>
+  <updated>2017-02-15T09:34:41.000Z</updated>
   <id>https://yeqianming.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://yeqianming.github.io/2017/02/15/%E8%B5%8B%E5%80%BC%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E8%AE%A8%E8%AE%BA/"/>
     <id>https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/</id>
     <published>2017-02-15T09:09:40.000Z</published>
-    <updated>2017-02-15T09:33:10.000Z</updated>
+    <updated>2017-02-15T09:34:41.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>转载自csdn博客</code> <a href="http://blog.csdn.net/yfkiss/article/details/7450467" target="_blank" rel="external">C语言赋值语句是不是原子操作？</a> </p>
 <blockquote>
@@ -54,8 +54,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pushq   %rbp  </div><div class="line">  movq    %rsp, %rbp </div><div class="line">  movl    $10, -4(%rbp)</div><div class="line">  leaq    -4(%rbp), %rax</div><div class="line">  incl    (%rax)</div><div class="line">  movl    %eax, -4(%rbp)</div><div class="line">  leave</div></pre></td></tr></table></figure>
 <p>可以看到，n = m为两条指令：<br>        movl    -4(%rbp), %eax<br>        movl    %eax, -8(%rbp)</p>
 <p>n++三条指令：<br>         leaq    -4(%rbp), %rax<br>         incl    (%rax)<br>         movl    %eax, -4(%rbp)<br>都是多条指令，所以，不是原子操作。</p>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p><strong>原子操作和硬件实现、编译器实现都紧密相关，因此，单纯的在高级语言的层次讨论原子操作，没有太大的意义。</strong></p>
-<p>参考：<br><a href="http://wiki.osdev.org/Atomic_operation" target="_blank" rel="external">http://wiki.osdev.org/Atomic_operation</a><br><a href="http://www.webopedia.com/TERM/A/atomic_operation.html" target="_blank" rel="external">http://www.webopedia.com/TERM/A/atomic_operation.html</a><br><a href="http://www.chinaunix.net/jh/23/804826.html" target="_blank" rel="external">http://www.chinaunix.net/jh/23/804826.html</a><br><a href="http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx" target="_blank" rel="external">http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx</a></p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p><strong>原子操作和硬件实现、编译器实现都紧密相关，因此，单纯的在高级语言的层次讨论原子操作，没有太大的意义。</strong></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="http://wiki.osdev.org/Atomic_operation" target="_blank" rel="external">http://wiki.osdev.org/Atomic_operation</a><br><a href="http://www.webopedia.com/TERM/A/atomic_operation.html" target="_blank" rel="external">http://www.webopedia.com/TERM/A/atomic_operation.html</a><br><a href="http://www.chinaunix.net/jh/23/804826.html" target="_blank" rel="external">http://www.chinaunix.net/jh/23/804826.html</a><br><a href="http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx" target="_blank" rel="external">http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx</a></p>
 ]]></content>
     
     <summary type="html">
@@ -192,11 +192,11 @@
       <category term="技术博客" scheme="https://yeqianming.github.io/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/"/>
     
     
-      <category term="概念" scheme="https://yeqianming.github.io/tags/%E6%A6%82%E5%BF%B5/"/>
-    
       <category term="网络" scheme="https://yeqianming.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
       <category term="web" scheme="https://yeqianming.github.io/tags/web/"/>
+    
+      <category term="概念" scheme="https://yeqianming.github.io/tags/%E6%A6%82%E5%BF%B5/"/>
     
   </entry>
   
@@ -266,9 +266,9 @@
       <category term="技术博客" scheme="https://yeqianming.github.io/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/"/>
     
     
-      <category term="TCP" scheme="https://yeqianming.github.io/tags/TCP/"/>
-    
       <category term="网络" scheme="https://yeqianming.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="TCP" scheme="https://yeqianming.github.io/tags/TCP/"/>
     
   </entry>
   
