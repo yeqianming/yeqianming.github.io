@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yeqianming.github.io/"/>
-  <updated>2017-02-15T09:23:19.000Z</updated>
+  <updated>2017-02-15T09:31:24.000Z</updated>
   <id>https://yeqianming.github.io/</id>
   
   <author>
@@ -20,29 +20,28 @@
     <link href="https://yeqianming.github.io/2017/02/15/%E8%B5%8B%E5%80%BC%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E8%AE%A8%E8%AE%BA/"/>
     <id>https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/</id>
     <published>2017-02-15T09:09:40.000Z</published>
-    <updated>2017-02-15T09:23:19.000Z</updated>
+    <updated>2017-02-15T09:31:24.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>转载自csdn博客 <a href="http://blog.csdn.net/yfkiss/article/details/7450467" target="_blank" rel="external">C语言赋值语句是不是原子操作？</a></p>
-</blockquote>
 <p>经常看到有同学讨论，C语言的赋值语句是不是原子操作？C语言的++语句是不是原子操作？</p>
-<p>webopedia<strong>：</strong></p>
+</blockquote>
+<p><strong>webopedia</strong>:</p>
 <p>Atomic implies indivisibility and irreducibility, so an atomic operation must be performed entirely or not performed at all.An operation during which a processor can simultaneously read a location and write it <strong>in the same bus operation</strong>. This prevents any other processor or I/O device from writing or reading memory until the operation is complete.</p>
-<p>osdev：<br><strong>An atomic operation is an operation that will always be executed without any other process being able to read or change state that is read or changed during the operation.</strong> It is effectively executed as a single step, and is an important quality in a number of algorithms that deal with multiple indepent processes, both in synchronization and algorithms that update shared data without requiring synchronization.</p>
-<p><strong>相关概念：</strong><br>时钟周期、总线周期和指令周期</p>
-<ul>
+<p><strong>osdev</strong>:<br><strong>An atomic operation is an operation that will always be executed without any other process being able to read or change state that is read or changed during the operation.</strong> It is effectively executed as a single step, and is an important quality in a number of algorithms that deal with multiple indepent processes, both in synchronization and algorithms that update shared data without requiring synchronization.</p>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="时钟周期、总线周期和指令周期"><a href="#时钟周期、总线周期和指令周期" class="headerlink" title="时钟周期、总线周期和指令周期"></a>时钟周期、总线周期和指令周期</h3><ul>
 <li>1.时钟周期：微处理器执行指令的最小时间单位，又称T状态。它通常与微机的主频有关。</li>
 <li>2.总线周期：CPU对存储器或I/O端口完成一次读/写操作所需的时间。如8086微处理器的基本总线周期由四个时钟周期T1～T4组成，80486微处理器的基本总线周期由T1和T2两个时钟周期组成。当外设速度较慢时，可插入等待周期Tw。</li>
 <li>3.指令周期：CPU执行一条指令所需要的时间。<strong>指令周期由若干个总线周期组成</strong>，不同指令执行的时间不同。同一功能的指令，在寻址方式不同时，所需要的时间也不同。</li>
 </ul>
-<p>总线操作周期:微机系统各部件之间的信息交换是通过总线操作周期完成的，一个总线周期通常分为以下四个阶段。</p>
+<h3 id="总线操作周期"><a href="#总线操作周期" class="headerlink" title="总线操作周期"></a>总线操作周期</h3><p>微机系统各部件之间的信息交换是通过总线操作周期完成的，一个总线周期通常分为以下四个阶段。</p>
 <ul>
 <li>1.总线请求和仲裁阶段：当有多个模块提出总线请求时，必须由仲裁机构仲裁，确定将总线的使用权分配给哪个模块。</li>
 <li>2.寻址阶段：取得总线使用权的模块，经总线发出本次要访问的存储器或I/O端口的地址和有关命令。</li>
 <li>3.传送数据阶段：主模块（指取得总线控制权的模块）与其他模块之间进行数据的传送。</li>
 <li>4.结束阶段：主模块将有关信息从总线上撤除，主模块交出对总线的控制权。</li>
 </ul>
-<p><strong>CPU最小的执行单元是指令，一个指令周期可能包括多个总线周期。</strong><br>我们可以得到：</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><strong>CPU最小的执行单元是指令，一个指令周期可能包括多个总线周期。</strong><br>我们可以得到：</p>
 <ul>
 <li><strong>1. 在单处理器下，一个操作只包括一个cpu指令可以保证是原子操作。如果一个操作包含多个cpu指令不是原子操作。</strong></li>
 <li><strong>2. 在多处理器下，由于一个cpu指令周期可能包含多个总线周期，就有可能出现其他处理器在一个指令执行期间访问了其相关的状态。因此，多处理器下，指令执行期间还必须锁总线，才能保证CPU指令的原子性</strong></li>
@@ -55,7 +54,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pushq   %rbp  </div><div class="line">  movq    %rsp, %rbp </div><div class="line">  movl    $10, -4(%rbp)</div><div class="line">  leaq    -4(%rbp), %rax</div><div class="line">  incl    (%rax)</div><div class="line">  movl    %eax, -4(%rbp)</div><div class="line">  leave</div></pre></td></tr></table></figure>
 <p>可以看到，n = m为两条指令：<br>        movl    -4(%rbp), %eax<br>        movl    %eax, -8(%rbp)</p>
 <p>n++三条指令：<br>         leaq    -4(%rbp), %rax<br>         incl    (%rax)<br>         movl    %eax, -4(%rbp)<br>都是多条指令，所以，不是原子操作。</p>
-<p>总结：<br><strong>原子操作和硬件实现、编译器实现都紧密相关，因此，单纯的在高级语言的层次讨论原子操作，没有太大的意义。</strong></p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p><strong>原子操作和硬件实现、编译器实现都紧密相关，因此，单纯的在高级语言的层次讨论原子操作，没有太大的意义。</strong></p>
 <p>参考：<br><a href="http://wiki.osdev.org/Atomic_operation" target="_blank" rel="external">http://wiki.osdev.org/Atomic_operation</a><br><a href="http://www.webopedia.com/TERM/A/atomic_operation.html" target="_blank" rel="external">http://www.webopedia.com/TERM/A/atomic_operation.html</a><br><a href="http://www.chinaunix.net/jh/23/804826.html" target="_blank" rel="external">http://www.chinaunix.net/jh/23/804826.html</a><br><a href="http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx" target="_blank" rel="external">http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx</a></p>
 ]]></content>
     
@@ -196,9 +195,9 @@
     
       <category term="网络" scheme="https://yeqianming.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
-      <category term="web" scheme="https://yeqianming.github.io/tags/web/"/>
-    
       <category term="概念" scheme="https://yeqianming.github.io/tags/%E6%A6%82%E5%BF%B5/"/>
+    
+      <category term="web" scheme="https://yeqianming.github.io/tags/web/"/>
     
   </entry>
   
