@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>go 连接池实现 | 叶千铭的博客 | 云和树</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="网络,go">
+    <meta name="description" content="连接池概述连接池可以看做是一个维护了若干连接的一个池子。需要则从其中拿取连接，用完则放回去。
+使用连接池可以提升资源的利用率，复用之前使用过的连接，节省创建关闭连接的时间成本，也可以防止出现大量建立连接而对资源的浪费等.也可防止频繁关闭连接出现的 TIME-WAIT 状态的连接。
+连接池需要的特性
+keeplive ，保持连接
+maxCap ，可设置最大连接数
+可以释放失效连接
+(可选) io超时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go 连接池实现">
+<meta property="og:url" content="https://yeqianming.github.io/2017/02/15/go-连接池实现/index.html">
+<meta property="og:site_name" content="叶千铭的博客">
+<meta property="og:description" content="连接池概述连接池可以看做是一个维护了若干连接的一个池子。需要则从其中拿取连接，用完则放回去。
+使用连接池可以提升资源的利用率，复用之前使用过的连接，节省创建关闭连接的时间成本，也可以防止出现大量建立连接而对资源的浪费等.也可防止频繁关闭连接出现的 TIME-WAIT 状态的连接。
+连接池需要的特性
+keeplive ，保持连接
+maxCap ，可设置最大连接数
+可以释放失效连接
+(可选) io超时">
+<meta property="og:updated_time" content="2017-02-15T09:05:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go 连接池实现">
+<meta name="twitter:description" content="连接池概述连接池可以看做是一个维护了若干连接的一个池子。需要则从其中拿取连接，用完则放回去。
+使用连接池可以提升资源的利用率，复用之前使用过的连接，节省创建关闭连接的时间成本，也可以防止出现大量建立连接而对资源的浪费等.也可防止频繁关闭连接出现的 TIME-WAIT 状态的连接。
+连接池需要的特性
+keeplive ，保持连接
+maxCap ，可设置最大连接数
+可以释放失效连接
+(可选) io超时">
+    
+        <link rel="alternative" href="/atom.xml" title="叶千铭的博客" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.7">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">叶千铭</h5>
+          <a href="mailto:mersenbln@126.com" title="mersenbln@126.com" class="mail">mersenbln@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                目录
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yeqianming" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">go 连接池实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">go 连接池实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-02-15T08:00:13.000Z" itemprop="datePublished" class="page-time">
+  2017-02-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连接池概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">连接池概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连接池需要的特性"><span class="post-toc-number">2.</span> <span class="post-toc-text">连接池需要的特性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连接池实现-fatih-pool-项目地址"><span class="post-toc-number">3.</span> <span class="post-toc-text">连接池实现  fatih/pool 项目地址</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Pool-接口"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Pool 接口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Pool-实现-channelPool"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Pool 实现 channelPool</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#初始化pool"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">初始化pool</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#从池中取连接"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">从池中取连接</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#将连接放回池中"><span class="post-toc-number">3.2.3.</span> <span class="post-toc-text">将连接放回池中</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关闭pool"><span class="post-toc-number">3.2.4.</span> <span class="post-toc-text">关闭pool</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#获取-pool"><span class="post-toc-number">3.2.5.</span> <span class="post-toc-text">获取 pool</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#连接包装-PoolConn"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">连接包装 PoolConn</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#包装连接及关闭方法"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">包装连接及关闭方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#标记不可用连接-MarkUnusable"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">标记不可用连接 MarkUnusable</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-go-连接池实现"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">go 连接池实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年02月15日 16:00" datetime="2017-02-15T08:00:13.000Z"  itemprop="datePublished">2017-02-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="连接池概述"><a href="#连接池概述" class="headerlink" title="连接池概述"></a>连接池概述</h2><p>连接池可以看做是一个维护了若干连接的一个池子。需要则从其中拿取连接，用完则放回去。</p>
+<p>使用连接池可以提升资源的利用率，复用之前使用过的连接，节省创建关闭连接的时间成本，也可以防止出现大量建立连接而对资源的浪费等.也可防止频繁关闭连接出现的 TIME-WAIT 状态的连接。</p>
+<h2 id="连接池需要的特性"><a href="#连接池需要的特性" class="headerlink" title="连接池需要的特性"></a>连接池需要的特性</h2><ul>
+<li>keeplive ，保持连接</li>
+<li>maxCap ，可设置最大连接数</li>
+<li>可以释放失效连接</li>
+<li>(可选) io超时处理</li>
+<li>(可选) 连接超时</li>
+<li>one-retry</li>
+<li>并发安全</li>
+</ul>
+<h2 id="连接池实现-fatih-pool-项目地址"><a href="#连接池实现-fatih-pool-项目地址" class="headerlink" title="连接池实现  fatih/pool 项目地址"></a>连接池实现  <a href="https://github.com/fatih/pool" target="_blank" rel="external">fatih/pool 项目地址</a></h2><h3 id="Pool-接口"><a href="#Pool-接口" class="headerlink" title="Pool 接口"></a>Pool 接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">type Pool interface &#123;</div><div class="line">	//获取连接</div><div class="line">	Get() (net.Conn, error)</div><div class="line">	Close()</div><div class="line">	Len() int</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Pool-实现-channelPool"><a href="#Pool-实现-channelPool" class="headerlink" title="Pool 实现 channelPool"></a>Pool 实现 channelPool</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//连接池的实现</div><div class="line">type channelPool struct &#123;</div><div class="line">	mu    sync.Mutex</div><div class="line">	conns chan net.Conn</div><div class="line"></div><div class="line">	//生成 net.Conn</div><div class="line">	factory Factory</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="初始化pool"><a href="#初始化pool" class="headerlink" title="初始化pool"></a>初始化pool</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//初始化 Pool</div><div class="line">func NewChannelPool(initialCap, maxCap int, factory Factory) (Pool, error) &#123;</div><div class="line">	if initialCap &lt; 0 || maxCap &lt;= 0 || initialCap &gt; maxCap &#123;</div><div class="line">		return nil, errors.New(&quot;invalid capacity settings&quot;)</div><div class="line">	&#125;</div><div class="line">	c := &amp;channelPool&#123;</div><div class="line">		conns:   make(chan net.Conn, maxCap),</div><div class="line">		factory: factory,</div><div class="line">	&#125;</div><div class="line">	//根据参数 初始化池中idle连接</div><div class="line">	for i := 0; i &lt; initialCap; i++ &#123;</div><div class="line">		conn, err := factory()</div><div class="line">		if err != nil &#123;</div><div class="line">			//有一个连接创建失败，则调用pool的close方法，关闭所有的连接</div><div class="line">			c.Close()</div><div class="line">			return nil, fmt.Errorf(&quot;factory is not able to fill the pool:%s&quot;, err)</div><div class="line">		&#125;</div><div class="line">		//放入连接池中</div><div class="line">		c.conns &lt;- conn</div><div class="line">	&#125;</div><div class="line">	return c, nil</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="从池中取连接"><a href="#从池中取连接" class="headerlink" title="从池中取连接"></a>从池中取连接</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">func (c *channelPool) Get() (net.Conn, error) &#123;</div><div class="line">	conns := c.getConns()</div><div class="line">	if conns == nil &#123;</div><div class="line">		return nil, ErrClosed</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	select &#123;</div><div class="line">	//从池中获取连接</div><div class="line">	case conn := &lt;-conns:</div><div class="line">		//连接为nil 则说明 channel Pool 已经关闭</div><div class="line">		if conn == nil &#123;</div><div class="line">			return nil, ErrClosed</div><div class="line">		&#125;</div><div class="line">		return c.wrapConn(conn), nil</div><div class="line">	default:</div><div class="line">		// pool 中没有空闲的连接，直接申请新的连接</div><div class="line">		conn, err := c.factory()</div><div class="line">		if err != nil &#123;</div><div class="line">			return nil, err</div><div class="line">		&#125;</div><div class="line">		return c.wrapConn(conn), nil</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="将连接放回池中"><a href="#将连接放回池中" class="headerlink" title="将连接放回池中"></a>将连接放回池中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">// 关闭连接时，调用放入连接到池中</div><div class="line">func (c *channelPool) put(conn net.Conn) error &#123;</div><div class="line">	if conn == nil &#123;</div><div class="line">		return errors.New(&quot;connection is nil. rejecting&quot;)</div><div class="line">	&#125;</div><div class="line">	c.mu.Lock()</div><div class="line">	defer c.mu.Unlock()</div><div class="line">	if c.conns == nil &#123;</div><div class="line">		//pool 关闭则直接关闭</div><div class="line">		return conn.Close()</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	select &#123;</div><div class="line">	// 放不进去，说明pool 已满</div><div class="line">	case c.conns &lt;- conn:</div><div class="line">		return nil</div><div class="line">		// 如果pool 已满，那么直接关闭连接</div><div class="line">	default:</div><div class="line">		return conn.Close()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="关闭pool"><a href="#关闭pool" class="headerlink" title="关闭pool"></a>关闭pool</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">func (c *channelPool) Close() &#123;</div><div class="line">	c.mu.Lock()</div><div class="line">	conns := c.conns</div><div class="line">	//快速清空pool</div><div class="line">	c.conns = nil</div><div class="line">	c.factory = nil</div><div class="line">	c.mu.Unlock()</div><div class="line"></div><div class="line">	if conns == nil &#123;</div><div class="line">		return</div><div class="line">	&#125;</div><div class="line">	close(conns)</div><div class="line">	//一次关闭连接</div><div class="line">	for conn := range conns &#123;</div><div class="line">		conn.Close()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="获取-pool"><a href="#获取-pool" class="headerlink" title="获取 pool"></a>获取 pool</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//并发安全,比如其他协程正好关闭pool，读取时发生竞争</div><div class="line">func (c *channelPool) getConns() chan net.Conn &#123;</div><div class="line">	c.mu.Lock()</div><div class="line">	conns := c.conns</div><div class="line">	c.mu.Unlock()</div><div class="line">	return conns</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="连接包装-PoolConn"><a href="#连接包装-PoolConn" class="headerlink" title="连接包装 PoolConn"></a>连接包装 PoolConn</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">type PoolConn struct &#123;</div><div class="line">	net.Conn</div><div class="line">	mu       sync.RWMutex</div><div class="line">	c        *channelPool</div><div class="line">	unusable bool</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="包装连接及关闭方法"><a href="#包装连接及关闭方法" class="headerlink" title="包装连接及关闭方法"></a>包装连接及关闭方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 将pool 和 conn关联起来</div><div class="line">func (c *channelPool) wrapConn(conn net.Conn) net.Conn &#123;</div><div class="line">	p := &amp;PoolConn&#123;c: c&#125;</div><div class="line">	p.Conn = conn</div><div class="line">	return p</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//重新实现close，关闭连接 优先会尝试放回pool 中</div><div class="line">func (p *PoolConn) Close() error &#123;</div><div class="line">	p.mu.RLock()</div><div class="line">	defer p.mu.RUnlock()</div><div class="line">	//若连接不可用 则直接调用conn的底层关闭方法</div><div class="line">	if p.unusable &#123;</div><div class="line">		if p.Conn != nil &#123;</div><div class="line">			return p.Conn.Close()</div><div class="line">		&#125;</div><div class="line">		return nil</div><div class="line">	&#125;</div><div class="line">	return p.c.put(p.Conn)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="标记不可用连接-MarkUnusable"><a href="#标记不可用连接-MarkUnusable" class="headerlink" title="标记不可用连接 MarkUnusable"></a>标记不可用连接 MarkUnusable</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">func (p *PoolConn) MarkUnusable() &#123;</div><div class="line">	p.mu.Lock()</div><div class="line">	p.unusable = true</div><div class="line">	p.mu.Unlock()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-02-15T09:05:58.000Z" itemprop="dateUpdated">2017年2月15日 17:05</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/02/15/go-连接池实现/" target="_blank" rel="external">https://yeqianming.github.io/2017/02/15/go-连接池实现/</a>
+    </div>
+    <footer>
+        <a href="https://yeqianming.github.io">
+            <img src="/img/avatar.jpg" alt="叶千铭">
+            叶千铭
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/15/go-连接池实现/&title=《go 连接池实现》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/15/go-连接池实现/&title=《go 连接池实现》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/15/go-连接池实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《go 连接池实现》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/15/go-连接池实现/&via=https://yeqianming.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/15/go-连接池实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/02/14/vim-列编辑模式/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">vim 列编辑模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="go-连接池实现" data-title="go 连接池实现" data-url="https://yeqianming.github.io/2017/02/15/go-连接池实现/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'yeqianminggithub', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.7');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/images/mm_facetoface_collect_qrcode_1486978385729.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/images/1486978472529.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>叶千铭的博客 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/15/go-连接池实现/&title=《go 连接池实现》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/15/go-连接池实现/&title=《go 连接池实现》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/15/go-连接池实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《go 连接池实现》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/15/go-连接池实现/&via=https://yeqianming.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/15/go-连接池实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3awY6DMAxFUf7/p5ntSDPAfXapFOdmhdoSOFm4tpPjwOP8Nci358Xgdx1vDBkyZCzLOG/H1W9qr/v33tr8/1BlyJCxAeMqgt1fk98TcOdZMmTIkNEPjmRmwpMhQ4aMTsDlL915rgwZMmR0Ure07OyHYxkyZOzG4F3371+/sr8hQ4aMpRhnONLgmAbo4lvJkCFjNIMHOLJJ+UYzLjj8IUOGjKEMfkPtVe7n58XtwycyZMjYkpFOV4v0tZQxCLgyZMgYwag11PqhlqebxdabDBkyBjG4lZemtc87BbMMGTJmM3gjnhSTtSMaaRF7ufQyZMgYzahlXJ9t9PMiOSbJkCFjEINvANQOYZCQygvjoN0mQ4aMxRn3072xDUCWIN6XlCFDxgYMHl550CTbnzxjfVg4GTJkbMPoTMrvShttqLUnQ4aM0Qwer3hBy7t6PE1E6aMMGTJGM1ChGIY/TkoL5gAvQ4aMcYxOgsiPa9TK3SCUy5AhYyiDF5Npo5+kjDy5fADLkCFjA0aauqVbnnzjM/6vkCFDxmaM2sEsEiLTwxbxosuQIWMo4wwHAZBA2U8ogzMjMmTIWJzRCXO161ojLy22ZciQMY/Bg2yaSqbt/k6qKkOGjB0YncBXC5S1gvbyLhkyZMjAKR1/xVqDD+0qyJAhY3sGL2vvH5ymlQ8LJEOGjA0YfDOAF6LpcvD2nAwZMnZj8NIxLS/7B8U+vKkpQ4aM9Rg/oNHRP3S42/IAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.7"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.7" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
