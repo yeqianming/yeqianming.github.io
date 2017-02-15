@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>赋值的原子性讨论 | 叶千铭的博客 | 云和树</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="概念,C,内核">
+    <meta name="description" content="转载自csdn博客 C语言赋值语句是不是原子操作？
+
+经常看到有同学讨论，C语言的赋值语句是不是原子操作？C语言的++语句是不是原子操作？
+webopedia：
+Atomic implies indivisibility and irreducibility, so an atomic operation must be performed entirely or not performed a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赋值的原子性讨论">
+<meta property="og:url" content="https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/index.html">
+<meta property="og:site_name" content="叶千铭的博客">
+<meta property="og:description" content="转载自csdn博客 C语言赋值语句是不是原子操作？
+
+经常看到有同学讨论，C语言的赋值语句是不是原子操作？C语言的++语句是不是原子操作？
+webopedia：
+Atomic implies indivisibility and irreducibility, so an atomic operation must be performed entirely or not performed a">
+<meta property="og:updated_time" content="2017-02-15T09:23:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="赋值的原子性讨论">
+<meta name="twitter:description" content="转载自csdn博客 C语言赋值语句是不是原子操作？
+
+经常看到有同学讨论，C语言的赋值语句是不是原子操作？C语言的++语句是不是原子操作？
+webopedia：
+Atomic implies indivisibility and irreducibility, so an atomic operation must be performed entirely or not performed a">
+    
+        <link rel="alternative" href="/atom.xml" title="叶千铭的博客" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.7">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">叶千铭</h5>
+          <a href="mailto:mersenbln@126.com" title="mersenbln@126.com" class="mail">mersenbln@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                目录
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yeqianming" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">赋值的原子性讨论</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">赋值的原子性讨论</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-02-15T09:09:40.000Z" itemprop="datePublished" class="page-time">
+  2017-02-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-赋值的原子性讨论"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">赋值的原子性讨论</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年02月15日 17:09" datetime="2017-02-15T09:09:40.000Z"  itemprop="datePublished">2017-02-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>转载自csdn博客 <a href="http://blog.csdn.net/yfkiss/article/details/7450467" target="_blank" rel="external">C语言赋值语句是不是原子操作？</a></p>
+</blockquote>
+<p>经常看到有同学讨论，C语言的赋值语句是不是原子操作？C语言的++语句是不是原子操作？</p>
+<p>webopedia<strong>：</strong></p>
+<p>Atomic implies indivisibility and irreducibility, so an atomic operation must be performed entirely or not performed at all.An operation during which a processor can simultaneously read a location and write it <strong>in the same bus operation</strong>. This prevents any other processor or I/O device from writing or reading memory until the operation is complete.</p>
+<p>osdev：<br><strong>An atomic operation is an operation that will always be executed without any other process being able to read or change state that is read or changed during the operation.</strong> It is effectively executed as a single step, and is an important quality in a number of algorithms that deal with multiple indepent processes, both in synchronization and algorithms that update shared data without requiring synchronization.</p>
+<p><strong>相关概念：</strong><br>时钟周期、总线周期和指令周期</p>
+<ul>
+<li>1.时钟周期：微处理器执行指令的最小时间单位，又称T状态。它通常与微机的主频有关。</li>
+<li>2.总线周期：CPU对存储器或I/O端口完成一次读/写操作所需的时间。如8086微处理器的基本总线周期由四个时钟周期T1～T4组成，80486微处理器的基本总线周期由T1和T2两个时钟周期组成。当外设速度较慢时，可插入等待周期Tw。</li>
+<li>3.指令周期：CPU执行一条指令所需要的时间。<strong>指令周期由若干个总线周期组成</strong>，不同指令执行的时间不同。同一功能的指令，在寻址方式不同时，所需要的时间也不同。</li>
+</ul>
+<p>总线操作周期:微机系统各部件之间的信息交换是通过总线操作周期完成的，一个总线周期通常分为以下四个阶段。</p>
+<ul>
+<li>1.总线请求和仲裁阶段：当有多个模块提出总线请求时，必须由仲裁机构仲裁，确定将总线的使用权分配给哪个模块。</li>
+<li>2.寻址阶段：取得总线使用权的模块，经总线发出本次要访问的存储器或I/O端口的地址和有关命令。</li>
+<li>3.传送数据阶段：主模块（指取得总线控制权的模块）与其他模块之间进行数据的传送。</li>
+<li>4.结束阶段：主模块将有关信息从总线上撤除，主模块交出对总线的控制权。</li>
+</ul>
+<p><strong>CPU最小的执行单元是指令，一个指令周期可能包括多个总线周期。</strong><br>我们可以得到：</p>
+<ul>
+<li><strong>1. 在单处理器下，一个操作只包括一个cpu指令可以保证是原子操作。如果一个操作包含多个cpu指令不是原子操作。</strong></li>
+<li><strong>2. 在多处理器下，由于一个cpu指令周期可能包含多个总线周期，就有可能出现其他处理器在一个指令执行期间访问了其相关的状态。因此，多处理器下，指令执行期间还必须锁总线，才能保证CPU指令的原子性</strong></li>
+</ul>
+<p>我们看下C语言的赋值和++操作<br>代码main.c：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">	void fun1()  &#123;          </div><div class="line">	volatile int m;         </div><div class="line">	volatile int n;          </div><div class="line">	m = 99;         </div><div class="line">	n = m;  </div><div class="line">&#125;    </div><div class="line">void fun2()  &#123;          </div><div class="line">	volatile int n = 10;          </div><div class="line">	n++;  </div><div class="line">&#125;    </div><div class="line">int main(int argc, char** argv)  &#123;          </div><div class="line">	fun();            </div><div class="line">	return 0;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 汇编：gcc -S main.c<br>查看fun1相关的指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">pushq   %rbp       </div><div class="line">  movq    %rsp, %rbp  </div><div class="line">  movl    $99, -4(%rbp)   </div><div class="line">  movl    -4(%rbp), %eax   </div><div class="line">  movl    %eax, -8(%rbp) </div><div class="line">  leave</div></pre></td></tr></table></figure>
+<p>  fun2相关指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pushq   %rbp  </div><div class="line">  movq    %rsp, %rbp </div><div class="line">  movl    $10, -4(%rbp)</div><div class="line">  leaq    -4(%rbp), %rax</div><div class="line">  incl    (%rax)</div><div class="line">  movl    %eax, -4(%rbp)</div><div class="line">  leave</div></pre></td></tr></table></figure>
+<p>可以看到，n = m为两条指令：<br>        movl    -4(%rbp), %eax<br>        movl    %eax, -8(%rbp)</p>
+<p>n++三条指令：<br>         leaq    -4(%rbp), %rax<br>         incl    (%rax)<br>         movl    %eax, -4(%rbp)<br>都是多条指令，所以，不是原子操作。</p>
+<p>总结：<br><strong>原子操作和硬件实现、编译器实现都紧密相关，因此，单纯的在高级语言的层次讨论原子操作，没有太大的意义。</strong></p>
+<p>参考：<br><a href="http://wiki.osdev.org/Atomic_operation" target="_blank" rel="external">http://wiki.osdev.org/Atomic_operation</a><br><a href="http://www.webopedia.com/TERM/A/atomic_operation.html" target="_blank" rel="external">http://www.webopedia.com/TERM/A/atomic_operation.html</a><br><a href="http://www.chinaunix.net/jh/23/804826.html" target="_blank" rel="external">http://www.chinaunix.net/jh/23/804826.html</a><br><a href="http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx" target="_blank" rel="external">http://odetocode.com/blogs/scott/archive/2006/05/17/atomic-operations.aspx</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-02-15T09:23:19.000Z" itemprop="dateUpdated">2017年2月15日 17:23</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/02/15/赋值的原子性讨论/" target="_blank" rel="external">https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/</a>
+    </div>
+    <footer>
+        <a href="https://yeqianming.github.io">
+            <img src="/img/avatar.jpg" alt="叶千铭">
+            叶千铭
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内核/">内核</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/概念/">概念</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/&title=《赋值的原子性讨论》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/&title=《赋值的原子性讨论》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《赋值的原子性讨论》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/&via=https://yeqianming.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/02/15/go-连接池实现/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">go 连接池实现</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="赋值的原子性讨论" data-title="赋值的原子性讨论" data-url="https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'yeqianminggithub', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.7');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/images/mm_facetoface_collect_qrcode_1486978385729.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/images/1486978472529.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>叶千铭的博客 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/&title=《赋值的原子性讨论》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/&title=《赋值的原子性讨论》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《赋值的原子性讨论》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/&via=https://yeqianming.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/15/赋值的原子性讨论/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsElEQVR42u3a0WrrQAwE0Pz/T7evvZSUGWnX5MLxU0hSZ48Lljza1ys+vn4cv99J3v/56bvzJ7/4unHg4eHhLZaeLPr3j+VnSL6/PwMeHh7eM7y/b9bJTbktEvmFy9eDh4eH98m8/Madd7nthcPDw8P733k5oG2aP6Iw4OHh4Y3CiNktO2+R8wj4StaCh4eHF/PyKdLnvL4y38PDw8NbT9XzIpHfxNu2e7VaPDw8vAu8s8OtNm7IN13l7TIeHh7ebV67sSmPcU91tkkw8bb5xsPDw7vAO9UEtwVjVpBaMB4eHt4zvKQAtC1yuyEgb8SjrQN4eHh413h5qWhJ7UaudtHHtgvg4eHhHSoGfzfNSRO82SiQv/M2n8bDw8M7ytvUjdnoaxYH5yVnON/Dw8PDi3l5NNBuKUg2BORbB2bfxMPDw7vBa5/fZwFBPhKbFZ46usXDw8Nb8NrhfXshNpHE5gL901Lj4eHhXea1EcMsL83PvBq54eHh4V3gJbFC2862cUYebay+j4eHh3eNt3mWny1uNvRKIgw8PDy8G7x25J+0vHlYMBu/FevEw8PDu8Zrx11FkBpHD5tG/O0v4uHh4V3gbSLXdun50S63beXx8PDwNrzDeUbZNLfBRF1U8PDw8C7w8m0EbbucLzG/iHk8gYeHh3eblz/8z0LVvB1vC0y0cjw8PLwHefsFFXVplJ1EmQoeHh7e47zZojfnfJVH9KyAh4eHd4g3G03NgobN6+S/hIeHh/cMb3PzbbdJbTYWtBelRuLh4eGVvPbUyTBsFge3oUYUTODh4eFd47VL3zfcbUudXyw8PDy8T+Plt+xT2wXyMhDtJsPDw8N7nJdP5/N2eR+IHK57eHh4eKM/a2/9m7Y7KTmzS4mHh4d3g3fggX906s2wv4hx8fDw8E7yvgG4KsU6ctd8uQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.7"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.7" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
