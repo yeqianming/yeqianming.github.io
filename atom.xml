@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yeqianming.github.io/"/>
-  <updated>2017-02-15T13:21:32.000Z</updated>
+  <updated>2017-02-28T13:22:36.000Z</updated>
   <id>https://yeqianming.github.io/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>shell shift</title>
+    <link href="https://yeqianming.github.io/2017/02/28/shell-shift/"/>
+    <id>https://yeqianming.github.io/2017/02/28/shell-shift/</id>
+    <published>2017-02-28T13:11:41.000Z</published>
+    <updated>2017-02-28T13:22:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​    shift 命令用于对参数进行左移，可以在循环遍历控制参数数的递减，也可以去掉左边不需要的参数。shift 命令每执行一次，参数数减一，参数位置依次左移一位，比如之前的 $1 被清除，$2变成$1。同理 shift n 表示前n位参数被清除。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">__contains_word()</div><div class="line">&#123;</div><div class="line">    echo $@</div><div class="line">    local w word=$0; shift</div><div class="line">    echo $@</div><div class="line">    for w in &quot;$@&quot;; do</div><div class="line">         echo $w</div><div class="line">        [[ $w = &quot;$word&quot; ]] &amp;&amp; return</div><div class="line">    done</div><div class="line">    return 1</div><div class="line">&#125;</div><div class="line">__contains_word aaa aaaf ddd xxx eee</div></pre></td></tr></table></figure>
+<h3 id="输出："><a href="#输出：" class="headerlink" title="输出："></a><strong>输出</strong>：</h3><blockquote>
+<p>aaa aaaf ddd xxx eee<br>aaaf ddd xxx eee<br>aaaf<br>ddd<br>xxx<br>eee</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;​    shift 命令用于对参数进行左移，可以在循环遍历控制参数数的递减，也可以去掉左边不需要的参数。shift 命令每执行一次，参数数
+    
+    </summary>
+    
+      <category term="技术博客" scheme="https://yeqianming.github.io/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="shell" scheme="https://yeqianming.github.io/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>golang cookieJar</title>
@@ -219,9 +246,9 @@
       <category term="技术博客" scheme="https://yeqianming.github.io/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/"/>
     
     
-      <category term="web" scheme="https://yeqianming.github.io/tags/web/"/>
-    
       <category term="网络" scheme="https://yeqianming.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="web" scheme="https://yeqianming.github.io/tags/web/"/>
     
       <category term="概念" scheme="https://yeqianming.github.io/tags/%E6%A6%82%E5%BF%B5/"/>
     
