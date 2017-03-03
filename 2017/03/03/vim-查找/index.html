@@ -13,26 +13,56 @@
     
     
     
-    <title>shell shift | 叶千铭的博客 | 云和树</title>
+    <title>vim 查找 | 叶千铭的博客 | 云和树</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="shell">
-    <meta name="description" content="概述​    shift 命令用于对参数进行左移，可以在循环遍历控制参数数的递减，也可以去掉左边不需要的参数。shift 命令每执行一次，参数数减一，参数位置依次左移一位，比如之前的 $1 被清除，$2变成$1。同理 shift n 表示前n位参数被清除。
-例子123456789101112__contains_word()&amp;#123;    echo $@    local w word=$0;">
+    <meta name="keywords" content="vim">
+    <meta name="description" content="普通查找
+cmd: / 向后查找 
+cmd: ? 向前查找
+
+全词匹配
+cmd: word\&amp;gt;  后缀匹配
+cmd: \&amp;lt;word  前缀匹配
+cmd: \&amp;lt; word \&amp;gt; 全词匹配
+
+大小写
+cmd:  :set ignorecase  // 忽略大小写
+cmd: :set noignorecase  // 恢复大小写敏感">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell shift">
-<meta property="og:url" content="https://yeqianming.github.io/2017/02/28/shell-shift/index.html">
+<meta property="og:title" content="vim 查找">
+<meta property="og:url" content="https://yeqianming.github.io/2017/03/03/vim-查找/index.html">
 <meta property="og:site_name" content="叶千铭的博客">
-<meta property="og:description" content="概述​    shift 命令用于对参数进行左移，可以在循环遍历控制参数数的递减，也可以去掉左边不需要的参数。shift 命令每执行一次，参数数减一，参数位置依次左移一位，比如之前的 $1 被清除，$2变成$1。同理 shift n 表示前n位参数被清除。
-例子123456789101112__contains_word()&amp;#123;    echo $@    local w word=$0;">
-<meta property="og:updated_time" content="2017-02-28T13:22:36.000Z">
+<meta property="og:description" content="普通查找
+cmd: / 向后查找 
+cmd: ? 向前查找
+
+全词匹配
+cmd: word\&amp;gt;  后缀匹配
+cmd: \&amp;lt;word  前缀匹配
+cmd: \&amp;lt; word \&amp;gt; 全词匹配
+
+大小写
+cmd:  :set ignorecase  // 忽略大小写
+cmd: :set noignorecase  // 恢复大小写敏感">
+<meta property="og:updated_time" content="2017-03-03T08:09:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell shift">
-<meta name="twitter:description" content="概述​    shift 命令用于对参数进行左移，可以在循环遍历控制参数数的递减，也可以去掉左边不需要的参数。shift 命令每执行一次，参数数减一，参数位置依次左移一位，比如之前的 $1 被清除，$2变成$1。同理 shift n 表示前n位参数被清除。
-例子123456789101112__contains_word()&amp;#123;    echo $@    local w word=$0;">
+<meta name="twitter:title" content="vim 查找">
+<meta name="twitter:description" content="普通查找
+cmd: / 向后查找 
+cmd: ? 向前查找
+
+全词匹配
+cmd: word\&amp;gt;  后缀匹配
+cmd: \&amp;lt;word  前缀匹配
+cmd: \&amp;lt; word \&amp;gt; 全词匹配
+
+大小写
+cmd:  :set ignorecase  // 忽略大小写
+cmd: :set noignorecase  // 恢复大小写敏感">
     
         <link rel="alternative" href="/atom.xml" title="叶千铭的博客" type="application/atom+xml">
     
@@ -109,7 +139,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">shell shift</div>
+        <div class="flex-col header-title ellipsis">vim 查找</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -131,11 +161,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">shell shift</h1>
+        <h1 class="title">vim 查找</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-02-28T13:11:41.000Z" itemprop="datePublished" class="page-time">
-  2017-02-28
+                <time datetime="2017-03-03T07:59:04.000Z" itemprop="datePublished" class="page-time">
+  2017-03-03
 </time>
 
 
@@ -155,17 +185,17 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#例子"><span class="post-toc-number">2.</span> <span class="post-toc-text">例子</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#输出："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">输出：</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#普通查找"><span class="post-toc-number">1.</span> <span class="post-toc-text">普通查找</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全词匹配"><span class="post-toc-number">2.</span> <span class="post-toc-text">全词匹配</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#大小写"><span class="post-toc-number">3.</span> <span class="post-toc-text">大小写</span></a></li></ol>
         </nav>
     </aside>
     
-<article id="post-shell-shift"
+<article id="post-vim-查找"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">shell shift</h1>
+        <h1 class="post-card-title">vim 查找</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017年02月28日 21:11" datetime="2017-02-28T13:11:41.000Z"  itemprop="datePublished">2017-02-28</time>
+            <time class="post-time" title="2017年03月03日 15:59" datetime="2017-03-03T07:59:04.000Z"  itemprop="datePublished">2017-03-03</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
@@ -182,10 +212,18 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​    shift 命令用于对参数进行左移，可以在循环遍历控制参数数的递减，也可以去掉左边不需要的参数。shift 命令每执行一次，参数数减一，参数位置依次左移一位，比如之前的 $1 被清除，$2变成$1。同理 shift n 表示前n位参数被清除。</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">__contains_word()</div><div class="line">&#123;</div><div class="line">    echo $@</div><div class="line">    local w word=$0; shift</div><div class="line">    echo $@</div><div class="line">    for w in &quot;$@&quot;; do</div><div class="line">         echo $w</div><div class="line">        [[ $w = &quot;$word&quot; ]] &amp;&amp; return</div><div class="line">    done</div><div class="line">    return 1</div><div class="line">&#125;</div><div class="line">__contains_word aaa aaaf ddd xxx eee</div></pre></td></tr></table></figure>
-<h3 id="输出："><a href="#输出：" class="headerlink" title="输出："></a><strong>输出</strong>：</h3><blockquote>
-<p>aaa aaaf ddd xxx eee<br>aaaf ddd xxx eee<br>aaaf<br>ddd<br>xxx<br>eee</p>
+            <h3 id="普通查找"><a href="#普通查找" class="headerlink" title="普通查找"></a>普通查找</h3><blockquote>
+<p>cmd: / 向后查找 </p>
+<p>cmd: ? 向前查找</p>
+</blockquote>
+<h3 id="全词匹配"><a href="#全词匹配" class="headerlink" title="全词匹配"></a>全词匹配</h3><blockquote>
+<p>cmd: word\&gt;  后缀匹配</p>
+<p>cmd: \&lt;word  前缀匹配</p>
+<p>cmd: \&lt; word \&gt; 全词匹配</p>
+</blockquote>
+<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><blockquote>
+<p>cmd:  :set ignorecase  // 忽略大小写</p>
+<p>cmd: :set noignorecase  // 恢复大小写敏感</p>
 </blockquote>
 
         </div>
@@ -194,11 +232,11 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-02-28T13:22:36.000Z" itemprop="dateUpdated">2017年2月28日 21:22</time>
+    最后更新时间：<time datetime="2017-03-03T08:09:49.000Z" itemprop="dateUpdated">2017年3月3日 16:09</time>
 </span><br>
 
 
-        这里写留言或版权声明：<a href="/2017/02/28/shell-shift/" target="_blank" rel="external">https://yeqianming.github.io/2017/02/28/shell-shift/</a>
+        这里写留言或版权声明：<a href="/2017/03/03/vim-查找/" target="_blank" rel="external">https://yeqianming.github.io/2017/03/03/vim-查找/</a>
     </div>
     <footer>
         <a href="https://yeqianming.github.io">
@@ -217,7 +255,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
 
 
             
@@ -227,7 +265,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/28/shell-shift/&title=《shell shift》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/03/03/vim-查找/&title=《vim 查找》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -237,22 +275,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/28/shell-shift/&title=《shell shift》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/03/03/vim-查找/&title=《vim 查找》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/28/shell-shift/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/03/03/vim-查找/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《shell shift》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/28/shell-shift/&via=https://yeqianming.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vim 查找》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/03/03/vim-查找/&via=https://yeqianming.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/28/shell-shift/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/03/03/vim-查找/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -272,21 +310,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/03/03/vim-查找/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">vim 查找</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/02/15/golang-cookieJar/" id="post-next" class="post-nav-link">
+      <a href="/2017/02/28/shell-shift/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">golang cookieJar</h4>
+        <h4 class="title">shell shift</h4>
       </a>
     </div>
   
@@ -297,7 +328,7 @@
     
 
 <div class="comments" id="comments">
-    <div class="ds-thread" data-thread-key="shell-shift" data-title="shell shift" data-url="https://yeqianming.github.io/2017/02/28/shell-shift/"></div>
+    <div class="ds-thread" data-thread-key="vim-查找" data-title="vim 查找" data-url="https://yeqianming.github.io/2017/03/03/vim-查找/"></div>
 </div>
 <script>
 lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
@@ -379,7 +410,7 @@ lazyScripts.push('/js/embed.min.js?v=1.4.7');
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/02/28/shell-shift/&title=《shell shift》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://yeqianming.github.io/2017/03/03/vim-查找/&title=《vim 查找》 — 叶千铭的博客&pic=https://yeqianming.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -389,22 +420,22 @@ lazyScripts.push('/js/embed.min.js?v=1.4.7');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/02/28/shell-shift/&title=《shell shift》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://yeqianming.github.io/2017/03/03/vim-查找/&title=《vim 查找》 — 叶千铭的博客&source=~~~~~~~~" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/02/28/shell-shift/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://yeqianming.github.io/2017/03/03/vim-查找/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《shell shift》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/02/28/shell-shift/&via=https://yeqianming.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vim 查找》 — 叶千铭的博客&url=https://yeqianming.github.io/2017/03/03/vim-查找/&via=https://yeqianming.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/02/28/shell-shift/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://yeqianming.github.io/2017/03/03/vim-查找/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -415,7 +446,7 @@ lazyScripts.push('/js/embed.min.js?v=1.4.7');
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aS27CQBAFQO5/aSJlG9m812MieVxeRWDMFItO/16v+Hr/XkevHL07u+fvnZddGBgYt2W8T6+jQ6+/e3Tc8/sPP4uBgfEARv64JNadB+XzUHsepg9fx8DAwCjvaQ+dPAcDAwOjTdHacrT9LAYGBsasiG0TxKR91n7vBbU4BgbGDRntYOA///7ifAMDA+MmjHd5tY222XigPhUGBsbWjGSRoj10zm4bcx/CMQYGxsMYK4sRs6I3acktdQ0xMDBuy2iTuZWR50pQ/vAuBgbGAxizhC+H5UF5trqBgYGxNyNJEJNRwbdHocWyGgYGxnaMvEE/W4/If6DZggUGBsZzGHmROStN15POD8/EwMDYmvGNwHpVuVuPEDAwMDZlJCVlu3i6kibmlTcGBsYzGStrqUmo/cYotP6PgYGBcUPGeeBrg2zb7s8/Ww8yMTAwNmKsLEzkLbaokh4lmnUUx8DAuDmjbX7NensrKxqHJ8HAwNia0Ta2LphCxAno7E4MDIz9GLNiMl8da+vp/Md6tTEbAwPj5oz15Yk8HUxCeX0SDAyMrRltidiGyFmKmYR4DAyM5zDe5dUuiq036aLvxcDA2JoxC3N5SL2q0K17hxgYGNsx2iHielmbJ6DFkBUDA+MBjFkTf2XN67IqHAMDAyPOJetW/mkYrVt1GBgYGKP1i1mzLEkWl1JDDAyM2zLydYekrd8OAJLI+SHFxMDA2JqxPhhIHn1VI28Jg4GBcT/GD1xr5lS9FLbbAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3azXKDMAxF4bz/S9NtZxLIuZKTFvl4lZkC9cdCWD+PB17H0zr769n1z3f9vvLsOYuXDBkybss4LhdhXG/i+TnXAPI6XuxBhgwZGzBIKCQRj2yRvDK+NxkyZMhYu0VyHJQhQ4aMTzN4AsyTYRkyZMhIj2v9tLNftpMhQ8ZuDF51//7vj/Q3ZMiQcSvGEa5am/P63qO9ZMiQMZuRFv3TgQmS+qIElexHhgwZoxm8oFY7rfFrSCPhDVWGDBnjGLzR2E87eQiOQ7YMGTK2YdRK8zxo8hCfHhNlyJAhIy2QpcGUN0dP8TJkyNiA0TnMpUNdnBGEZhkyZGzA6JTy+dbJEZA3Hk6/GzJkyBjK4I0BssVOQsuRL8ptMmTIGM34ziGvlioH0yIyZMgYzagFUHJl59gXtAdkyJAxmsEBtZZAJxmu7VCGDBlTGQuaiLjZWXsO+mDIkCFjKIOMRNRKaXycgjdET58sQ4aM0Yw0UNYemibD6diHDBkydmCQwaw0jJJVm+mKT7gyZMgYx+BjFryUX2tYxt8KGTJkbMAgwxNputsZtohLeDJkyBjKqB3m0sGLdMAiTXFlyJAxm9EJc2ljMi2upU+TIUPGbEZt2Iv/S/Jq+s0GGTJk7MCoHeA6DcvaF+BNLi5DhgwZi86hnREN1N+QIUOGDHwXCZ28nfkH3w0ZMmT8M0Z/eIs0Cfr3LsjFZciQcUNGGhz5cS0oloGAu6CpKUOGjPsxfgD1KRkGbdzSrgAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

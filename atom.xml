@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yeqianming.github.io/"/>
-  <updated>2017-02-28T13:22:36.000Z</updated>
+  <updated>2017-03-03T08:09:49.000Z</updated>
   <id>https://yeqianming.github.io/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vim 查找</title>
+    <link href="https://yeqianming.github.io/2017/03/03/vim-%E6%9F%A5%E6%89%BE/"/>
+    <id>https://yeqianming.github.io/2017/03/03/vim-查找/</id>
+    <published>2017-03-03T07:59:04.000Z</published>
+    <updated>2017-03-03T08:09:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="普通查找"><a href="#普通查找" class="headerlink" title="普通查找"></a>普通查找</h3><blockquote>
+<p>cmd: / 向后查找 </p>
+<p>cmd: ? 向前查找</p>
+</blockquote>
+<h3 id="全词匹配"><a href="#全词匹配" class="headerlink" title="全词匹配"></a>全词匹配</h3><blockquote>
+<p>cmd: word\&gt;  后缀匹配</p>
+<p>cmd: \&lt;word  前缀匹配</p>
+<p>cmd: \&lt; word \&gt; 全词匹配</p>
+</blockquote>
+<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><blockquote>
+<p>cmd:  :set ignorecase  // 忽略大小写</p>
+<p>cmd: :set noignorecase  // 恢复大小写敏感</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;普通查找&quot;&gt;&lt;a href=&quot;#普通查找&quot; class=&quot;headerlink&quot; title=&quot;普通查找&quot;&gt;&lt;/a&gt;普通查找&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;cmd: / 向后查找 &lt;/p&gt;
+&lt;p&gt;cmd: ? 向前查找&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="技术博客" scheme="https://yeqianming.github.io/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="vim" scheme="https://yeqianming.github.io/tags/vim/"/>
+    
+  </entry>
   
   <entry>
     <title>shell shift</title>
