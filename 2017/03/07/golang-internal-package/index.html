@@ -23,7 +23,8 @@
     <meta name="description" content="概述go internal  包，一种安全隔离机制，可以保证内部包只被特定的引用，而不是任何其他包都可以引用。
 规则 ： 如果导入代码位于“internal”目录的父目录为根的树外部，则无法导入包含internal的路径的包。
 例子
-/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树种代码导入。
+
+/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树中代码导入。
 
 引用
 Go 1.4 internal packages">
@@ -34,17 +35,19 @@ Go 1.4 internal packages">
 <meta property="og:description" content="概述go internal  包，一种安全隔离机制，可以保证内部包只被特定的引用，而不是任何其他包都可以引用。
 规则 ： 如果导入代码位于“internal”目录的父目录为根的树外部，则无法导入包含internal的路径的包。
 例子
-/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树种代码导入。
+
+/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树中代码导入。
 
 引用
 Go 1.4 internal packages">
-<meta property="og:updated_time" content="2017-03-07T09:33:07.000Z">
+<meta property="og:updated_time" content="2017-03-07T09:44:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang internal package">
 <meta name="twitter:description" content="概述go internal  包，一种安全隔离机制，可以保证内部包只被特定的引用，而不是任何其他包都可以引用。
 规则 ： 如果导入代码位于“internal”目录的父目录为根的树外部，则无法导入包含internal的路径的包。
 例子
-/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树种代码导入。
+
+/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树中代码导入。
 
 引用
 Go 1.4 internal packages">
@@ -177,7 +180,7 @@ Go 1.4 internal packages">
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#例子"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">例子</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用"><span class="post-toc-number">2.</span> <span class="post-toc-text">引用</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用"><span class="post-toc-number">2.</span> <span class="post-toc-text">引用</span></a></li></ol>
         </nav>
     </aside>
     
@@ -206,8 +209,9 @@ Go 1.4 internal packages">
         <div class="post-content" id="post-content" itemprop="postContent">
             <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>go internal  包，一种安全隔离机制，可以保证内部包只被特定的引用，而不是任何其他包都可以引用。</p>
 <p><strong>规则</strong> ： 如果导入代码位于“internal”目录的父目录为根的树外部，则无法导入包含internal的路径的包。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><blockquote>
-<p>/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树种代码导入。</p>
+<p><strong>例子</strong></p>
+<blockquote>
+<p>/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树中代码导入。</p>
 </blockquote>
 <h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
 <li><a href="https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit" target="_blank" rel="external">Go 1.4 internal packages</a></li>
@@ -219,7 +223,7 @@ Go 1.4 internal packages">
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-03-07T09:33:07.000Z" itemprop="dateUpdated">2017年3月7日 17:33</time>
+    最后更新时间：<time datetime="2017-03-07T09:44:07.000Z" itemprop="dateUpdated">2017年3月7日 17:44</time>
 </span><br>
 
 

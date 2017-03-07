@@ -184,7 +184,8 @@
         概述go internal  包，一种安全隔离机制，可以保证内部包只被特定的引用，而不是任何其他包都可以引用。
 规则 ： 如果导入代码位于“internal”目录的父目录为根的树外部，则无法导入包含internal的路径的包。
 例子
-/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树种代码导入。
+
+/a/b/c/internal/d/e 中代码只能被以 /a/b/c 为根目录的树中代码导入。
 
 引用
 Go 1.4 internal packages
