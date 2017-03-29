@@ -151,6 +151,60 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-mongodb-aggregate"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017年03月29日 16:05" datetime="2017-03-29T08:05:33.000Z"  itemprop="datePublished">2017-03-29</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
+
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/03/29/mongodb-aggregate/">mongodb aggregate</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        背景
+需求：删除mongodb中重复的“阶段数据”,阶段表中大概有近百万数据。
+方案：按照 “orderid、stepname 分组”，并统计分组中条目数量，筛选出数量大于1的结果，并且按照“createdate”排序。
+
+数据表1CMD:db.col.step.find()
+1234567891011121314151617181920&#123;&quot;_id&quot; : Obj...
+    
+
+        <a href="/2017/03/29/mongodb-aggregate/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工程实践/">工程实践</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-golang-internal-package"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -645,99 +699,6 @@ database/sql 中的连接池
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-go位操作"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017年02月13日 16:40" datetime="2017-02-13T08:40:37.000Z"  itemprop="datePublished">2017-02-13</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术博客/">技术博客</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/13/go位操作/">go位操作</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        操作符
-
-
-AND
-按位与
-a&amp;b
-
-
-
-
-OR
-按位或
-a 竖杠b
-
-
-XOR
-异或
-a^b
-
-
-NOT
-按位取反
-^a
-
-
-AND NOT
-按位清除
-a&amp;^b
-
-
-LEFT SHIFT
-左移
-a&lt;&lt;1
-
-
-RIGHT SHIFT
-右移
-a&gt;&gt;1
-
-
-
-几种实例
-变换符号
-
-123func nagation(a int) int &#123;	ret...
-    
-
-        <a href="/2017/02/13/go位操作/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li></ul>
 
     </div>
     
